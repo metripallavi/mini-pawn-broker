@@ -1,9 +1,11 @@
 import { z } from "zod";
 
-export const receivePaymentSchema = z.object({
+export const paymentSchema = z.object({
   loanId: z.number().int().positive(),
 
-  paymentDate: z.string().datetime(),
+  paymentDate: z.coerce.date(),
 
-  amount: z.number().positive("Payment amount must be greater than zero"),
+  amount: z.number().positive(),
 });
+
+export type PaymentInput = z.infer<typeof paymentSchema>;

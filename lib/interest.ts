@@ -1,21 +1,23 @@
 export function calculateInterest(
   principal: number,
   monthlyRate: number,
-  loanDate: Date,
-  currentDate: Date
-): number {
-  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  fromDate: Date,
+  toDate: Date
+) {
+  const milliseconds = toDate.getTime() - fromDate.getTime();
 
-  const days =
-    Math.max(
-      0,
-      Math.floor(
-        (currentDate.getTime() - loanDate.getTime()) / millisecondsPerDay
-      )
-    );
+  const days = Math.max(
+    0,
+    Math.floor(milliseconds / (1000 * 60 * 60 * 24))
+  );
 
   const interest =
-    principal * (monthlyRate / 100) * (days / 30);
+    principal *
+    (monthlyRate / 100) *
+    (days / 30);
 
-  return Number(interest.toFixed(2));
+  return {
+    days,
+    interest: Number(interest.toFixed(2)),
+  };
 }
