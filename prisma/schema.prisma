@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum PaymentMode {
@@ -31,7 +32,7 @@ model Customer {
 
 model Loan {
   id                   Int      @id @default(autoincrement())
-  loanNumber           String   @unique
+  loanNumber           String?  @unique
   customerId           Int
   loanDate             DateTime
   loanAmount           Decimal  @db.Decimal(12, 2)
@@ -39,8 +40,8 @@ model Loan {
 
   pledgedItemName String
 
-  grossWeight       Decimal @db.Decimal(10, 3)
-  stoneWeight       Decimal @db.Decimal(10, 3)
+  grossWeight        Decimal @db.Decimal(10, 3)
+  stoneWeight        Decimal @db.Decimal(10, 3)
   estimatedItemValue Decimal @db.Decimal(12, 2)
 
   paymentMode PaymentMode
@@ -76,7 +77,7 @@ model Payment {
 
 model Voucher {
   id            Int      @id @default(autoincrement())
-  voucherNumber String   @unique
+  voucherNumber String?  @unique
   voucherDate   DateTime
   voucherType   VoucherType
 
